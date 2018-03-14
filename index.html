@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lunch Today</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel=icon href=favicon.ico>
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="app.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-38341110-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '');
+    </script>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+      var elm = document.getElementById('container');
+
+      app = Elm.Main.embed(elm);
+      app.ports.play.subscribe(function(event) {
+        var audio = document.getElementById(event);
+        playSubscription(app, audio);
+      });
+
+      app.ports.pause.subscribe(function(event) {
+        removePlayingIdAttr();
+
+        var audio = document.getElementById(event);
+        pausePromise(audio, false);
+      });
+
+      app.ports.previous.subscribe(function(event) {
+        removePlayingIdAttr();
+
+        var audioStop = document.getElementById(event[0]);
+        pausePromise(audioStop, true);
+        var audioPlay = document.getElementById(event[1]);
+        playSubscription(app, audioPlay);
+      });
+
+      app.ports.next.subscribe(function(event) {
+        removePlayingIdAttr();
+
+        var audioStop = document.getElementById(event[0]);
+        pausePromise(audioStop, true);
+        var audioPlay = document.getElementById(event[1]);
+        playSubscription(app, audioPlay);
+      });
+
+      function playSubscription(app, el) {
+        el.play();
+        app.ports.setDuration.send(el.duration);
+        app.ports.setSongId.send(el.id);
+        app.ports.setSongName.send(el.name);
+        el.parentElement.setAttribute("id", "playing")
+      }
+
+      function pausePromise(el, beginning) {
+        if (el !== undefined) {
+          el.play().then(function() {
+            el.pause();
+            if (beginning) {
+              el.currentTime = 0;
+            }
+          }).catch(function(error) {
+            console.log('Error', error);
+          });
+        }
+      }
+
+      removePlayingIdAttr = function() {
+        var songs = document.getElementsByClassName("songs");
+        for (i = 0; i < songs.length; i++) {
+          songs[i].setAttribute("id", "");
+        }
+      }
+    </script>
+  </body>
+</html>
