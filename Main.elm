@@ -54,14 +54,23 @@ view model =
                 Nothing ->
                     div [] []
                 Just recipe ->
-                    div [] [text recipe.title]
+                    displayActiveRecipe recipe
         ]
 
 recipeCard : Recipe -> Html Msg
 recipeCard recipe =
-    div [ class "recipe-card" ]
-        [ img [ src recipe.photo_src, height 500, width 500, onClick (Activate recipe)] [] 
-        , span [] [ text (toString recipe.title) ]]
+        div [ class "recipe-card" ]
+        [ img [ class "recipe-img", src recipe.photo_src, onClick (Activate recipe)] [] 
+        , div [ class "card-title"] [ text recipe.title ]
+        ]
+
+displayActiveRecipe : Recipe -> Html Msg
+displayActiveRecipe recipe =
+    div [ class "active-recipe" ] 
+    [ div [] [ text recipe.title]
+    , img [ src recipe.photo_src ] []
+    , div [] [ text recipe.description ]
+    ]
 
 init : (Model, Cmd Msg)
 init =

@@ -20,5 +20,23 @@ recipes =
         , small_photo_src = "photos/IMG_1389.JPG"
         , photo_src = "photos/IMG_1389.JPG"
         , description = "my sweet recipe!!"
+        },
+        { id = "1"
+        , title = "Title!!!!"
+        , small_photo_src = "photos/IMG_1389.JPG"
+        , photo_src = "photos/IMG_1389.JPG"
+        , description = "my sweet recipe!!"
+        },
+        { id = "1"
+        , title = "Title"
+        , small_photo_src = "photos/IMG_1389.JPG"
+        , photo_src = "photos/IMG_1389.JPG"
+        , description = "my sweet recipe!!"
+        },
+        { id = "1"
+        , title = "Title"
+        , small_photo_src = "photos/IMG_1389.JPG"
+        , photo_src = "photos/IMG_1389.JPG"
+        , description = "my sweet recipe!!"
         }
     ]

@@ -8269,11 +8269,66 @@ var _user$project$Recipe$recipes = {
 		_1: {
 			ctor: '::',
 			_0: {id: '1', title: 'Title', small_photo_src: 'photos/IMG_1389.JPG', photo_src: 'photos/IMG_1389.JPG', description: 'my sweet recipe!!'},
-			_1: {ctor: '[]'}
+			_1: {
+				ctor: '::',
+				_0: {id: '1', title: 'Title!!!!', small_photo_src: 'photos/IMG_1389.JPG', photo_src: 'photos/IMG_1389.JPG', description: 'my sweet recipe!!'},
+				_1: {
+					ctor: '::',
+					_0: {id: '1', title: 'Title', small_photo_src: 'photos/IMG_1389.JPG', photo_src: 'photos/IMG_1389.JPG', description: 'my sweet recipe!!'},
+					_1: {
+						ctor: '::',
+						_0: {id: '1', title: 'Title', small_photo_src: 'photos/IMG_1389.JPG', photo_src: 'photos/IMG_1389.JPG', description: 'my sweet recipe!!'},
+						_1: {ctor: '[]'}
+					}
+				}
+			}
 		}
 	}
 };
 
+var _user$project$Main$displayActiveRecipe = function (recipe) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('active-recipe'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(recipe.title),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$img,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$src(recipe.photo_src),
+						_1: {ctor: '[]'}
+					},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(recipe.description),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
 var _user$project$Main$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
@@ -8320,19 +8375,15 @@ var _user$project$Main$recipeCard = function (recipe) {
 				_elm_lang$html$Html$img,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$src(recipe.photo_src),
+					_0: _elm_lang$html$Html_Attributes$class('recipe-img'),
 					_1: {
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$height(500),
+						_0: _elm_lang$html$Html_Attributes$src(recipe.photo_src),
 						_1: {
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$width(500),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$html$Html_Events$onClick(
-									_user$project$Main$Activate(recipe)),
-								_1: {ctor: '[]'}
-							}
+							_0: _elm_lang$html$Html_Events$onClick(
+								_user$project$Main$Activate(recipe)),
+							_1: {ctor: '[]'}
 						}
 					}
 				},
@@ -8340,12 +8391,15 @@ var _user$project$Main$recipeCard = function (recipe) {
 			_1: {
 				ctor: '::',
 				_0: A2(
-					_elm_lang$html$Html$span,
-					{ctor: '[]'},
+					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(
-							_elm_lang$core$Basics$toString(recipe.title)),
+						_0: _elm_lang$html$Html_Attributes$class('card-title'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(recipe.title),
 						_1: {ctor: '[]'}
 					}),
 				_1: {ctor: '[]'}
@@ -8376,14 +8430,7 @@ var _user$project$Main$view = function (model) {
 							{ctor: '[]'},
 							{ctor: '[]'});
 					} else {
-						return A2(
-							_elm_lang$html$Html$div,
-							{ctor: '[]'},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text(_p1._0.title),
-								_1: {ctor: '[]'}
-							});
+						return _user$project$Main$displayActiveRecipe(_p1._0);
 					}
 				}(),
 				_1: {ctor: '[]'}

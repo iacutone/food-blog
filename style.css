@@ -4,5 +4,23 @@
 }
 
 .recipe-card {
-  display: inline;
+  margin: 20px;
+  display: inline-block;
 }
+
+.recipe-card:hover {
+  background: #F7FCFF;
+}
+
+.card-title {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.recipe-img {
+  border: 1px solid blue;
+  border-radius: 50%;
+  height: 300px;
+  width: 300px;
+}
+
