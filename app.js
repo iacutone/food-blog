@@ -8262,18 +8262,58 @@ var _elm_lang$html$Html_Events$Options = F2(
 
 var _user$project$Recipe$recipes = {
 	ctor: '::',
-	_0: {id: '1', photo_src: 'photos/IMG_1389.JPG', description: 'my sweet recipe!!'},
+	_0: {id: '1', title: 'Title!!!!', small_photo_src: 'photos/IMG_1389.JPG', photo_src: 'photos/IMG_1389.JPG', description: 'my sweet recipe!!'},
 	_1: {
 		ctor: '::',
-		_0: {id: '1', photo_src: 'photos/IMG_1389.JPG', description: 'my sweet recipe!!'},
-		_1: {ctor: '[]'}
+		_0: {id: '1', title: 'Title', small_photo_src: 'photos/IMG_1389.JPG', photo_src: 'photos/IMG_1389.JPG', description: 'my sweet recipe!!'},
+		_1: {
+			ctor: '::',
+			_0: {id: '1', title: 'Title', small_photo_src: 'photos/IMG_1389.JPG', photo_src: 'photos/IMG_1389.JPG', description: 'my sweet recipe!!'},
+			_1: {ctor: '[]'}
+		}
 	}
 };
 
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		if (_p0.ctor === 'Activate') {
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{
+						activeRecipe: _elm_lang$core$Maybe$Just(_p0._0),
+						recipes: {ctor: '[]'}
+					}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		} else {
+			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$Main$initialModel = {recipes: _user$project$Recipe$recipes, activeRecipe: _elm_lang$core$Maybe$Nothing};
+var _user$project$Main$init = {ctor: '_Tuple2', _0: _user$project$Main$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
+var _user$project$Main$Model = F2(
+	function (a, b) {
+		return {recipes: a, activeRecipe: b};
+	});
+var _user$project$Main$Recipe = F5(
+	function (a, b, c, d, e) {
+		return {id: a, title: b, description: c, small_photo_src: d, photo_src: e};
+	});
+var _user$project$Main$None = {ctor: 'None'};
+var _user$project$Main$Activate = function (a) {
+	return {ctor: 'Activate', _0: a};
+};
 var _user$project$Main$recipeCard = function (recipe) {
 	return A2(
 		_elm_lang$html$Html$div,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('recipe-card'),
+			_1: {ctor: '[]'}
+		},
 		{
 			ctor: '::',
 			_0: A2(
@@ -8281,7 +8321,20 @@ var _user$project$Main$recipeCard = function (recipe) {
 				{
 					ctor: '::',
 					_0: _elm_lang$html$Html_Attributes$src(recipe.photo_src),
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$height(500),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$width(500),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onClick(
+									_user$project$Main$Activate(recipe)),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
 				},
 				{ctor: '[]'}),
 			_1: {
@@ -8291,7 +8344,8 @@ var _user$project$Main$recipeCard = function (recipe) {
 					{ctor: '[]'},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(recipe.description),
+						_0: _elm_lang$html$Html$text(
+							_elm_lang$core$Basics$toString(recipe.title)),
 						_1: {ctor: '[]'}
 					}),
 				_1: {ctor: '[]'}
@@ -8301,25 +8355,41 @@ var _user$project$Main$recipeCard = function (recipe) {
 var _user$project$Main$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('recipes-container'),
+			_1: {ctor: '[]'}
+		},
 		{
 			ctor: '::',
 			_0: A2(
 				_elm_lang$html$Html$div,
 				{ctor: '[]'},
-				A2(_elm_lang$core$List$map, _user$project$Main$recipeCard, _user$project$Recipe$recipes)),
-			_1: {ctor: '[]'}
+				A2(_elm_lang$core$List$map, _user$project$Main$recipeCard, model.recipes)),
+			_1: {
+				ctor: '::',
+				_0: function () {
+					var _p1 = model.activeRecipe;
+					if (_p1.ctor === 'Nothing') {
+						return A2(
+							_elm_lang$html$Html$div,
+							{ctor: '[]'},
+							{ctor: '[]'});
+					} else {
+						return A2(
+							_elm_lang$html$Html$div,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(_p1._0.title),
+								_1: {ctor: '[]'}
+							});
+					}
+				}(),
+				_1: {ctor: '[]'}
+			}
 		});
 };
-var _user$project$Main$update = F2(
-	function (msg, model) {
-		var _p0 = msg;
-		return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-	});
-var _user$project$Main$initialModel = {
-	recipes: {ctor: '[]'}
-};
-var _user$project$Main$init = {ctor: '_Tuple2', _0: _user$project$Main$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
 var _user$project$Main$main = _elm_lang$html$Html$program(
 	{
 		init: _user$project$Main$init,
@@ -8327,14 +8397,6 @@ var _user$project$Main$main = _elm_lang$html$Html$program(
 		update: _user$project$Main$update,
 		subscriptions: _elm_lang$core$Basics$always(_elm_lang$core$Platform_Sub$none)
 	})();
-var _user$project$Main$Model = function (a) {
-	return {recipes: a};
-};
-var _user$project$Main$Recipe = F3(
-	function (a, b, c) {
-		return {id: a, description: b, photo_src: c};
-	});
-var _user$project$Main$None = {ctor: 'None'};
 
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};

@@ -8,30 +8,38 @@ import Recipe exposing (..)
 -- MSG
 
 type Msg
-    = None
+    = Activate Recipe
+    | None
 
 -- MODEL
 
 type alias Model =
-    { 
-    recipes: List Recipe
+    { recipes: List Recipe
+    , activeRecipe: Maybe Recipe
     }
 
 type alias Recipe =
     { id: String
+    , title: String
     , description: String
+    , small_photo_src: String
     , photo_src: String
     }
 
 initialModel : Model
 initialModel =
-    { recipes = [] }
+    { recipes = recipes 
+    , activeRecipe = Nothing
+    }
 
 -- UPDATE
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        Activate recipe ->
+            ( { model | activeRecipe = Just recipe, recipes = [] }, Cmd.none )
+
         None ->
             ( model , Cmd.none )
 
@@ -39,16 +47,21 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ class "recipes-container" ]
         [ div []
-            (List.map recipeCard recipes)
+            (List.map recipeCard model.recipes),
+            case model.activeRecipe of
+                Nothing ->
+                    div [] []
+                Just recipe ->
+                    div [] [text recipe.title]
         ]
 
 recipeCard : Recipe -> Html Msg
 recipeCard recipe =
-    div []
-        [ img [ src recipe.photo_src ] [] 
-        , span [] [ text recipe.description ]]
+    div [ class "recipe-card" ]
+        [ img [ src recipe.photo_src, height 500, width 500, onClick (Activate recipe)] [] 
+        , span [] [ text (toString recipe.title) ]]
 
 init : (Model, Cmd Msg)
 init =
