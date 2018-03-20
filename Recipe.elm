@@ -7,7 +7,14 @@ recipes =
         , title = "1"
         , small_photo_src = "photos/IMG_1389.JPG"
         , photo_src = "photos/IMG_1389.JPG"
-        , description = "my sweet recipe!!"
+        , description = """
+
+# Apple Pie Recipe
+
+  1. Invent the universe.
+  2. Bake an apple pie.
+
+"""
         },
         { id = "1"
         , title = "2"

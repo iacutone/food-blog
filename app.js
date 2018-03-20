@@ -8402,7 +8402,7 @@ var _evancz$elm_markdown$Markdown$Options = F4(
 
 var _user$project$Recipe$recipes = {
 	ctor: '::',
-	_0: {id: '1', title: '1', small_photo_src: 'photos/IMG_1389.JPG', photo_src: 'photos/IMG_1389.JPG', description: 'my sweet recipe!!'},
+	_0: {id: '1', title: '1', small_photo_src: 'photos/IMG_1389.JPG', photo_src: 'photos/IMG_1389.JPG', description: '\n\n# Apple Pie Recipe\n\n  1. Invent the universe.\n  2. Bake an apple pie.\n\n'},
 	_1: {
 		ctor: '::',
 		_0: {id: '1', title: '2', small_photo_src: 'photos/IMG_1389.JPG', photo_src: 'photos/IMG_1389.JPG', description: 'my sweet recipe!!'},
@@ -8679,17 +8679,13 @@ var _user$project$Main$displayActiveRecipe = function (recipe) {
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$div,
+							_evancz$elm_markdown$Markdown$toHtml,
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$class('active-recipe-description'),
 								_1: {ctor: '[]'}
 							},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text(recipe.description),
-								_1: {ctor: '[]'}
-							}),
+							recipe.description),
 						_1: {ctor: '[]'}
 					}
 				}

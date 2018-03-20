@@ -126,7 +126,7 @@ displayActiveRecipe recipe =
     [ backButton
     , h1 [ class "active-recipe-title" ] [ text recipe.title ]
     , img [ class "active-recipe-img", src recipe.photo_src ] []
-    , div [ class "active-recipe-description" ] [ text recipe.description ]
+    , Markdown.toHtml [ class "active-recipe-description" ] recipe.description
     ]
 
 backButton : Html Msg
