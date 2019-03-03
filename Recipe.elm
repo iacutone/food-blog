@@ -1,13 +1,13 @@
-module Recipe exposing (..)
+module Recipe exposing (recipes)
 
-recipes : List{id: String, title: String, small_photo_src: String, photo_src: String, description: String}
+
+recipes : List { id : String, title : String, small_photo_src : String, photo_src : String, description : String }
 recipes =
-    [ 
-        { id = "1"
-        , title = "Kung Pao"
-        , small_photo_src = "photos/3-23-2018.JPG"
-        , photo_src = "photos/3-23-2018.JPG"
-        , description = """
+    [ { id = "1"
+      , title = "Kung Pao"
+      , small_photo_src = "photos/3-23-2018.JPG"
+      , photo_src = "photos/3-23-2018.JPG"
+      , description = """
 
 # Kung Pao with Shrimp and Chicken
 
@@ -42,5 +42,5 @@ Add ginger and garlic and to wok and saute over medium heat. When garlic is gold
 ### Other Notes
 - between 5 - 7 servings
 """
-        }
+      }
     ]
