@@ -1,6 +1,7 @@
 module Main exposing (Model, Msg(..), Recipe, ScrollInfo, appendRecipes, backButton, displayActiveRecipe, filterRecipes, filterRecipesInput, init, initialModel, main, onScroll, recipeCard, recipeList, scrollInfoDecoder, update, view)
 
 import Array exposing (..)
+import Browser
 import Char exposing (fromCode)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -21,6 +22,10 @@ type Msg
     | Filter String
     | ScrollEvent ScrollInfo
     | None
+
+
+type Page
+    = Index
 
 
 
@@ -84,13 +89,13 @@ update msg model =
                     num =
                         model.recipeCount + 3
 
-                    recipeList =
+                    lisfOfRecipes =
                         Array.fromList recipes
                             |> Array.slice model.recipeCount num
                             |> Array.toList
 
                     appendedRecipes =
-                        appendRecipes recipeList model
+                        appendRecipes lisfOfRecipes model
                 in
                 ( { model | recipes = appendedRecipes, recipeCount = num }, Cmd.none )
 
@@ -205,11 +210,10 @@ init =
     ( initialModel, Cmd.none )
 
 
-main : Program Never Model Msg
 main =
-    Html.program
-        { init = init
-        , view = view
+    Browser.element
+        { init = \() -> init
         , update = update
         , subscriptions = always Sub.none
+        , view = view
         }
