@@ -1,7 +1,10 @@
-module Main exposing (Model, Msg(..), Recipe, ScrollInfo, appendRecipes, backButton, displayActiveRecipe, filterRecipes, filterRecipesInput, init, initialModel, main, onScroll, recipeCard, recipeList, scrollInfoDecoder, update, view)
+module Main exposing (Model, Msg(..), Recipe, ScrollInfo, appendRecipes, backButton, displayActiveRecipe, filterRecipes, filterRecipesInput, init, main, onScroll, recipeCard, recipeList, scrollInfoDecoder, update, view)
+
+-- import Browser exposing (UrlRequest(..))
 
 import Array exposing (..)
 import Browser
+import Browser.Navigation as Nav
 import Char exposing (fromCode)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -10,6 +13,7 @@ import Json.Decode
 import Markdown exposing (toHtml)
 import Recipe exposing (..)
 import String exposing (fromChar)
+import Url
 
 
 
@@ -21,6 +25,8 @@ type Msg
     | RenderRecipeList
     | Filter String
     | ScrollEvent ScrollInfo
+    | LinkClicked Browser.UrlRequest
+    | UrlChanged Url.Url
     | None
 
 
@@ -36,6 +42,8 @@ type alias Model =
     { recipes : List Recipe
     , activeRecipe : Maybe Recipe
     , recipeCount : Int
+    , key : Nav.Key
+    , url : Url.Url
     }
 
 
@@ -52,14 +60,6 @@ type alias ScrollInfo =
     { scrollHeight : Int
     , scrollTop : Int
     , offsetHeight : Int
-    }
-
-
-initialModel : Model
-initialModel =
-    { recipes = List.take 6 recipes
-    , activeRecipe = Nothing
-    , recipeCount = 6
     }
 
 
@@ -102,6 +102,19 @@ update msg model =
             else
                 ( model, Cmd.none )
 
+        LinkClicked urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model, Nav.pushUrl model.key (Url.toString url) )
+
+                Browser.External href ->
+                    ( model, Nav.load href )
+
+        UrlChanged url ->
+            ( { model | url = url }
+            , Cmd.none
+            )
+
         None ->
             ( model, Cmd.none )
 
@@ -118,20 +131,25 @@ appendRecipes list model =
 -- VIEW
 
 
-view : Model -> Html Msg
+view : Model -> Browser.Document Msg
 view model =
-    div []
-        [ filterRecipesInput model
+    { title = "Recipes"
+    , body =
+        [ h1 [ class "title" ] [ text "Recipes by EV" ]
         , div []
-            [ recipeList model
-            , case model.activeRecipe of
-                Nothing ->
-                    div [] []
+            [ filterRecipesInput model
+            , div []
+                [ recipeList model
+                , case model.activeRecipe of
+                    Nothing ->
+                        div [] []
 
-                Just recipe ->
-                    displayActiveRecipe recipe
+                    Just recipe ->
+                        displayActiveRecipe recipe
+                ]
             ]
         ]
+    }
 
 
 recipeList : Model -> Html Msg
@@ -205,15 +223,62 @@ scrollInfoDecoder =
         (Json.Decode.at [ "target", "offsetHeight" ] Json.Decode.int)
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( initialModel, Cmd.none )
+
+-- SUBSCRIPTIONS
 
 
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    Sub.none
+
+
+
+-- MAIN
+
+
+init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init flags url key =
+    ( initialModel key url, Cmd.none )
+
+
+initialModel key url =
+    { recipes = List.take 6 recipes
+    , activeRecipe = Nothing
+    , recipeCount = 6
+    , key = key
+    , url = url
+    }
+
+
+
+-- init : ( Model, Cmd Msg )
+-- init =
+--     ( initialModel, Cmd.none )
+-- initialModel : Model
+-- initialModel =
+--     { recipes = List.take 6 recipes
+--     , activeRecipe = Nothing
+--     , recipeCount = 6
+--     }
+
+
+main : Program () Model Msg
 main =
-    Browser.element
-        { init = \() -> init
-        , update = update
-        , subscriptions = always Sub.none
+    Browser.application
+        { init = init
         , view = view
+        , update = update
+        , subscriptions = subscriptions
+        , onUrlChange = UrlChanged
+        , onUrlRequest = LinkClicked
         }
+
+
+
+-- { init = \() -> init
+-- , update = update
+-- , subscriptions = always Sub.none
+-- , view = view
+-- , onUrlChange = ChangedUrl
+-- , onUrlRequest = ClickedLink
+-- }

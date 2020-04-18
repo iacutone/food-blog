@@ -4434,10 +4434,12 @@ function _Markdown_formatOptions(options)
 		smartypants: options.smartypants
 	};
 }
-var $elm$core$Basics$always = F2(
-	function (a, _v0) {
-		return a;
-	});
+var $author$project$Main$LinkClicked = function (a) {
+	return {$: 'LinkClicked', a: a};
+};
+var $author$project$Main$UrlChanged = function (a) {
+	return {$: 'UrlChanged', a: a};
+};
 var $elm$core$Basics$EQ = {$: 'EQ'};
 var $elm$core$Basics$GT = {$: 'GT'};
 var $elm$core$Basics$LT = {$: 'LT'};
@@ -5226,7 +5228,7 @@ var $elm$core$Task$perform = F2(
 			$elm$core$Task$Perform(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
-var $elm$browser$Browser$element = _Browser_element;
+var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Recipe$recipes = _List_fromArray(
 	[
 		{description: '\n\n# Kung Pao with Shrimp and Chicken\n\n## Ingredients\n\n### Aromatic\n- thumbnail size ginger, minced\n- 3 large cloves  garlic, minced\n- tablespoon sichuan pepper corns, ground\n\n### Meat\n- 3 chicken breasts cut into 1/2 inch cubes\n- 1/2 pound shrimp, optional\n\n### Vegetable\n- 2 green bell peppers, chopped\n- 1 pound white mushrooms, chopped\n- 2 sticks celery, chopped\n\n### Sauce\n- 1/4 cup black vinegar\n- 1/4 cup white cooking wine\n- 2 tablespoons corn starch\n- 1/8 cup soy sauce\n\n### Garnish\n- salted peanuts\n\n### Description\nAdd ginger and garlic and to wok and saute over medium heat. When garlic is golden brown, add wine and reduce. Push garlic/ginger mixture to the side and place chicken under oven burner with high heat until the outside it white. While the chicken cooks, add soy sauce and black vinegar. Make room in center of wok; add corn starch to liquid and mix until thick. Add the bell peppers and cook for two minutes, then add mushrooms/shrimp and cook for an additional minute. Turn off the burner and immediately add celery. Serve with peanuts and pepper corns.\n\n### Other Notes\n- between 5 - 7 servings\n', id: '1', photo_src: 'photos/3-23-2018.JPG', small_photo_src: 'photos/3-23-2018.JPG', title: 'Kung Pao'}
@@ -5357,16 +5359,29 @@ var $elm$core$List$take = F2(
 	function (n, list) {
 		return A3($elm$core$List$takeFast, 0, n, list);
 	});
-var $author$project$Main$initialModel = {
-	activeRecipe: $elm$core$Maybe$Nothing,
-	recipeCount: 6,
-	recipes: A2($elm$core$List$take, 6, $author$project$Recipe$recipes)
-};
+var $author$project$Main$initialModel = F2(
+	function (key, url) {
+		return {
+			activeRecipe: $elm$core$Maybe$Nothing,
+			key: key,
+			recipeCount: 6,
+			recipes: A2($elm$core$List$take, 6, $author$project$Recipe$recipes),
+			url: url
+		};
+	});
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Main$init = _Utils_Tuple2($author$project$Main$initialModel, $elm$core$Platform$Cmd$none);
+var $author$project$Main$init = F3(
+	function (flags, url, key) {
+		return _Utils_Tuple2(
+			A2($author$project$Main$initialModel, key, url),
+			$elm$core$Platform$Cmd$none);
+	});
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $author$project$Main$subscriptions = function (_v0) {
+	return $elm$core$Platform$Sub$none;
+};
 var $author$project$Main$appendRecipes = F2(
 	function (list, model) {
 		return _Utils_eq(list, _List_Nil) ? model.recipes : _Utils_ap(model.recipes, list);
@@ -5426,6 +5441,8 @@ var $elm$core$Array$fromList = function (list) {
 		return A3($elm$core$Array$fromListHelp, list, _List_Nil, 0);
 	}
 };
+var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
 var $elm$core$Elm$JsArray$appendN = _JsArray_appendN;
 var $elm$core$Elm$JsArray$slice = _JsArray_slice;
 var $elm$core$Array$appendHelpBuilder = F2(
@@ -5659,6 +5676,50 @@ var $elm$core$Array$slice = F3(
 			correctFrom,
 			A2($elm$core$Array$sliceRight, correctTo, array));
 	});
+var $elm$url$Url$addPort = F2(
+	function (maybePort, starter) {
+		if (maybePort.$ === 'Nothing') {
+			return starter;
+		} else {
+			var port_ = maybePort.a;
+			return starter + (':' + $elm$core$String$fromInt(port_));
+		}
+	});
+var $elm$url$Url$addPrefixed = F3(
+	function (prefix, maybeSegment, starter) {
+		if (maybeSegment.$ === 'Nothing') {
+			return starter;
+		} else {
+			var segment = maybeSegment.a;
+			return _Utils_ap(
+				starter,
+				_Utils_ap(prefix, segment));
+		}
+	});
+var $elm$url$Url$toString = function (url) {
+	var http = function () {
+		var _v0 = url.protocol;
+		if (_v0.$ === 'Http') {
+			return 'http://';
+		} else {
+			return 'https://';
+		}
+	}();
+	return A3(
+		$elm$url$Url$addPrefixed,
+		'#',
+		url.fragment,
+		A3(
+			$elm$url$Url$addPrefixed,
+			'?',
+			url.query,
+			_Utils_ap(
+				A2(
+					$elm$url$Url$addPort,
+					url.port_,
+					_Utils_ap(http, url.host)),
+				url.path)));
+};
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -5707,12 +5768,33 @@ var $author$project$Main$update = F2(
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
+			case 'LinkClicked':
+				var urlRequest = msg.a;
+				if (urlRequest.$ === 'Internal') {
+					var url = urlRequest.a;
+					return _Utils_Tuple2(
+						model,
+						A2(
+							$elm$browser$Browser$Navigation$pushUrl,
+							model.key,
+							$elm$url$Url$toString(url)));
+				} else {
+					var href = urlRequest.a;
+					return _Utils_Tuple2(
+						model,
+						$elm$browser$Browser$Navigation$load(href));
+				}
+			case 'UrlChanged':
+				var url = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{url: url}),
+					$elm$core$Platform$Cmd$none);
 			default:
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 		}
 	});
-var $author$project$Main$RenderRecipeList = {$: 'RenderRecipeList'};
-var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -5722,6 +5804,8 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $author$project$Main$RenderRecipeList = {$: 'RenderRecipeList'};
+var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$core$String$cons = _String_cons;
 var $elm$core$String$fromChar = function (_char) {
 	return A2($elm$core$String$cons, _char, '');
@@ -5971,38 +6055,47 @@ var $author$project$Main$recipeList = function (model) {
 	}
 };
 var $author$project$Main$view = function (model) {
-	return A2(
-		$elm$html$Html$div,
-		_List_Nil,
-		_List_fromArray(
+	return {
+		body: _List_fromArray(
 			[
-				$author$project$Main$filterRecipesInput(model),
+				A2(
+				$elm$html$Html$h1,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('title')
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Recipes by EV')
+					])),
 				A2(
 				$elm$html$Html$div,
 				_List_Nil,
 				_List_fromArray(
 					[
-						$author$project$Main$recipeList(model),
-						function () {
-						var _v0 = model.activeRecipe;
-						if (_v0.$ === 'Nothing') {
-							return A2($elm$html$Html$div, _List_Nil, _List_Nil);
-						} else {
-							var recipe = _v0.a;
-							return $author$project$Main$displayActiveRecipe(recipe);
-						}
-					}()
+						$author$project$Main$filterRecipesInput(model),
+						A2(
+						$elm$html$Html$div,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$author$project$Main$recipeList(model),
+								function () {
+								var _v0 = model.activeRecipe;
+								if (_v0.$ === 'Nothing') {
+									return A2($elm$html$Html$div, _List_Nil, _List_Nil);
+								} else {
+									var recipe = _v0.a;
+									return $author$project$Main$displayActiveRecipe(recipe);
+								}
+							}()
+							]))
 					]))
-			]));
+			]),
+		title: 'Recipes'
+	};
 };
-var $author$project$Main$main = $elm$browser$Browser$element(
-	{
-		init: function (_v0) {
-			return $author$project$Main$init;
-		},
-		subscriptions: $elm$core$Basics$always($elm$core$Platform$Sub$none),
-		update: $author$project$Main$update,
-		view: $author$project$Main$view
-	});
+var $author$project$Main$main = $elm$browser$Browser$application(
+	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$LinkClicked, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));
