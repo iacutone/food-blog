@@ -5231,7 +5231,7 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Recipe$recipes = _List_fromArray(
 	[
-		{description: '\n\n# Kung Pao with Shrimp and Chicken\n\n## Ingredients\n\n### Aromatic\n- thumbnail size ginger, minced\n- 3 large cloves  garlic, minced\n- tablespoon sichuan pepper corns, ground\n\n### Meat\n- 3 chicken breasts cut into 1/2 inch cubes\n- 1/2 pound shrimp, optional\n\n### Vegetable\n- 2 green bell peppers, chopped\n- 1 pound white mushrooms, chopped\n- 2 sticks celery, chopped\n\n### Sauce\n- 1/4 cup black vinegar\n- 1/4 cup white cooking wine\n- 2 tablespoons corn starch\n- 1/8 cup soy sauce\n\n### Garnish\n- salted peanuts\n\n### Description\nAdd ginger and garlic and to wok and saute over medium heat. When garlic is golden brown, add wine and reduce. Push garlic/ginger mixture to the side and place chicken under oven burner with high heat until the outside it white. While the chicken cooks, add soy sauce and black vinegar. Make room in center of wok; add corn starch to liquid and mix until thick. Add the bell peppers and cook for two minutes, then add mushrooms/shrimp and cook for an additional minute. Turn off the burner and immediately add celery. Serve with peanuts and pepper corns.\n\n### Other Notes\n- between 5 - 7 servings\n', id: '1', photo_src: 'photos/3-23-2018.JPG', small_photo_src: 'photos/3-23-2018.JPG', title: 'Kung Pao'}
+		{description: '\n\n# Kung Pao with Shrimp and Chicken\n\n## Ingredients\n\n### Aromatic\n- thumbnail size ginger, minced\n- 3 large cloves  garlic, minced\n- tablespoon sichuan pepper corns, ground\n\n### Meat\n- 3 chicken breasts cut into 1/2 inch cubes\n- 1/2 pound shrimp, optional\n\n### Vegetable\n- 2 green bell peppers, chopped\n- 1 pound white mushrooms, chopped\n- 2 sticks celery, chopped\n\n### Sauce\n- 1/4 cup black vinegar\n- 1/4 cup white cooking wine\n- 2 tablespoons corn starch\n- 1/8 cup soy sauce\n\n### Garnish\n- salted peanuts\n\n### Description\nAdd ginger and garlic and to wok and saute over medium heat. When garlic is golden brown, add wine and reduce. Push garlic/ginger mixture to the side and place chicken under oven burner with high heat until the outside it white. While the chicken cooks, add soy sauce and black vinegar. Make room in center of wok; add corn starch to liquid and mix until thick. Add the bell peppers and cook for two minutes, then add mushrooms/shrimp and cook for an additional minute. Turn off the burner and immediately add celery. Serve with peanuts and pepper corns.\n\n### Other Notes\n- between 5 - 7 servings\n', id: '1', path: 'kung-pao', photo_src: 'photos/3-23-2018.JPG', small_photo_src: 'photos/3-23-2018.JPG', title: 'Kung Pao'}
 	]);
 var $elm$core$List$takeReverse = F3(
 	function (n, list, kept) {
@@ -5439,6 +5439,15 @@ var $elm$core$Array$fromList = function (list) {
 		return $elm$core$Array$empty;
 	} else {
 		return A3($elm$core$Array$fromListHelp, list, _List_Nil, 0);
+	}
+};
+var $elm$core$List$head = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return $elm$core$Maybe$Just(x);
+	} else {
+		return $elm$core$Maybe$Nothing;
 	}
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
@@ -5723,22 +5732,6 @@ var $elm$url$Url$toString = function (url) {
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
-			case 'Activate':
-				var recipe = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							activeRecipe: $elm$core$Maybe$Just(recipe),
-							recipes: _List_Nil
-						}),
-					$elm$core$Platform$Cmd$none);
-			case 'RenderRecipeList':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{activeRecipe: $elm$core$Maybe$Nothing, recipes: $author$project$Recipe$recipes}),
-					$elm$core$Platform$Cmd$none);
 			case 'Filter':
 				var query = msg.a;
 				var filteredRecipes = A2($author$project$Main$filterRecipes, model, query);
@@ -5772,12 +5765,47 @@ var $author$project$Main$update = F2(
 				var urlRequest = msg.a;
 				if (urlRequest.$ === 'Internal') {
 					var url = urlRequest.a;
-					return _Utils_Tuple2(
-						model,
-						A2(
-							$elm$browser$Browser$Navigation$pushUrl,
-							model.key,
-							$elm$url$Url$toString(url)));
+					var _v2 = url.path;
+					if (_v2 === '/') {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{activeRecipe: $elm$core$Maybe$Nothing}),
+							A2(
+								$elm$browser$Browser$Navigation$pushUrl,
+								model.key,
+								$elm$url$Url$toString(url)));
+					} else {
+						var recipe = $elm$core$List$head(
+							A2(
+								$elm$core$List$filter,
+								function (r) {
+									return r.path === 'kung-pao';
+								},
+								$author$project$Recipe$recipes));
+						if (recipe.$ === 'Just') {
+							var r = recipe.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										activeRecipe: $elm$core$Maybe$Just(r)
+									}),
+								A2(
+									$elm$browser$Browser$Navigation$pushUrl,
+									model.key,
+									$elm$url$Url$toString(url)));
+						} else {
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{activeRecipe: $elm$core$Maybe$Nothing}),
+								A2(
+									$elm$browser$Browser$Navigation$pushUrl,
+									model.key,
+									$elm$url$Url$toString(url)));
+						}
+					}
 				} else {
 					var href = urlRequest.a;
 					return _Utils_Tuple2(
@@ -5786,11 +5814,38 @@ var $author$project$Main$update = F2(
 				}
 			case 'UrlChanged':
 				var url = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{url: url}),
-					$elm$core$Platform$Cmd$none);
+				var _v4 = url.path;
+				if (_v4 === '/') {
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{activeRecipe: $elm$core$Maybe$Nothing}),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					var recipe = $elm$core$List$head(
+						A2(
+							$elm$core$List$filter,
+							function (r) {
+								return r.path === 'kung-pao';
+							},
+							$author$project$Recipe$recipes));
+					if (recipe.$ === 'Just') {
+						var r = recipe.a;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									activeRecipe: $elm$core$Maybe$Just(r)
+								}),
+							$elm$core$Platform$Cmd$none);
+					} else {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{activeRecipe: $elm$core$Maybe$Nothing}),
+							$elm$core$Platform$Cmd$none);
+					}
+				}
 			default:
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 		}
@@ -5804,47 +5859,6 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
-var $author$project$Main$RenderRecipeList = {$: 'RenderRecipeList'};
-var $elm$html$Html$button = _VirtualDom_node('button');
-var $elm$core$String$cons = _String_cons;
-var $elm$core$String$fromChar = function (_char) {
-	return A2($elm$core$String$cons, _char, '');
-};
-var $elm$core$Char$fromCode = _Char_fromCode;
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var $elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
-};
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$Main$backButton = function () {
-	var closeIcon = $elm$core$String$fromChar(
-		$elm$core$Char$fromCode(10006));
-	return A2(
-		$elm$html$Html$button,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('back-button'),
-				$elm$html$Html$Events$onClick($author$project$Main$RenderRecipeList)
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text(closeIcon)
-			]));
-}();
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$img = _VirtualDom_node('img');
@@ -5854,6 +5868,8 @@ var $elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm_explorations$markdown$Markdown$defaultOptions = {
 	defaultHighlighting: $elm$core$Maybe$Nothing,
 	githubFlavored: $elm$core$Maybe$Just(
@@ -5879,7 +5895,6 @@ var $author$project$Main$displayActiveRecipe = function (recipe) {
 			]),
 		_List_fromArray(
 			[
-				$author$project$Main$backButton,
 				A2(
 				$elm$html$Html$h1,
 				_List_fromArray(
@@ -5917,6 +5932,7 @@ var $elm$html$Html$Events$alwaysStop = function (x) {
 var $elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
 	return {$: 'MayStopPropagation', a: a};
 };
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
 var $elm$html$Html$Events$stopPropagationOn = F2(
 	function (event, decoder) {
 		return A2(
@@ -5974,6 +5990,16 @@ var $author$project$Main$filterRecipesInput = function (model) {
 var $author$project$Main$ScrollEvent = function (a) {
 	return {$: 'ScrollEvent', a: a};
 };
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
 var $author$project$Main$ScrollInfo = F3(
 	function (scrollHeight, scrollTop, offsetHeight) {
 		return {offsetHeight: offsetHeight, scrollHeight: scrollHeight, scrollTop: scrollTop};
@@ -6004,14 +6030,19 @@ var $author$project$Main$onScroll = function (msg) {
 		'scroll',
 		A2($elm$json$Json$Decode$map, msg, $author$project$Main$scrollInfoDecoder));
 };
-var $author$project$Main$Activate = function (a) {
-	return {$: 'Activate', a: a};
+var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
 };
 var $author$project$Main$recipeCard = function (recipe) {
 	return A2(
-		$elm$html$Html$div,
+		$elm$html$Html$a,
 		_List_fromArray(
 			[
+				$elm$html$Html$Attributes$href(recipe.path),
 				$elm$html$Html$Attributes$class('recipe-card')
 			]),
 		_List_fromArray(
@@ -6021,9 +6052,7 @@ var $author$project$Main$recipeCard = function (recipe) {
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$class('recipe-img'),
-						$elm$html$Html$Attributes$src(recipe.small_photo_src),
-						$elm$html$Html$Events$onClick(
-						$author$project$Main$Activate(recipe))
+						$elm$html$Html$Attributes$src(recipe.small_photo_src)
 					]),
 				_List_Nil),
 				A2(

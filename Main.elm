@@ -1,6 +1,4 @@
-module Main exposing (Model, Msg(..), Recipe, ScrollInfo, appendRecipes, backButton, displayActiveRecipe, filterRecipes, filterRecipesInput, init, main, onScroll, recipeCard, recipeList, scrollInfoDecoder, update, view)
-
--- import Browser exposing (UrlRequest(..))
+module Main exposing (Model, Msg(..), Recipe, ScrollInfo, appendRecipes, displayActiveRecipe, filterRecipes, filterRecipesInput, init, main, onScroll, recipeCard, recipeList, scrollInfoDecoder, update, view)
 
 import Array exposing (..)
 import Browser
@@ -21,17 +19,16 @@ import Url
 
 
 type Msg
-    = Activate Recipe
-    | RenderRecipeList
-    | Filter String
+    = Filter String
     | ScrollEvent ScrollInfo
     | LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
     | None
 
 
-type Page
-    = Index
+type UrlRequest
+    = Internal Url.Url
+    | External String
 
 
 
@@ -53,6 +50,7 @@ type alias Recipe =
     , description : String
     , small_photo_src : String
     , photo_src : String
+    , path : String
     }
 
 
@@ -70,12 +68,6 @@ type alias ScrollInfo =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Activate recipe ->
-            ( { model | activeRecipe = Just recipe, recipes = [] }, Cmd.none )
-
-        RenderRecipeList ->
-            ( { model | activeRecipe = Nothing, recipes = recipes }, Cmd.none )
-
         Filter query ->
             let
                 filteredRecipes =
@@ -105,15 +97,41 @@ update msg model =
         LinkClicked urlRequest ->
             case urlRequest of
                 Browser.Internal url ->
-                    ( model, Nav.pushUrl model.key (Url.toString url) )
+                    case url.path of
+                        "/" ->
+                            ( { model | activeRecipe = Nothing }, Nav.pushUrl model.key (Url.toString url) )
+
+                        _ ->
+                            let
+                                recipe =
+                                    List.head (List.filter (\r -> r.path == "kung-pao") recipes)
+                            in
+                            case recipe of
+                                Just r ->
+                                    ( { model | activeRecipe = Just r }, Nav.pushUrl model.key (Url.toString url) )
+
+                                Nothing ->
+                                    ( { model | activeRecipe = Nothing }, Nav.pushUrl model.key (Url.toString url) )
 
                 Browser.External href ->
                     ( model, Nav.load href )
 
         UrlChanged url ->
-            ( { model | url = url }
-            , Cmd.none
-            )
+            case url.path of
+                "/" ->
+                    ( { model | activeRecipe = Nothing }, Cmd.none )
+
+                _ ->
+                    let
+                        recipe =
+                            List.head (List.filter (\r -> r.path == "kung-pao") recipes)
+                    in
+                    case recipe of
+                        Just r ->
+                            ( { model | activeRecipe = Just r }, Cmd.none )
+
+                        Nothing ->
+                            ( { model | activeRecipe = Nothing }, Cmd.none )
 
         None ->
             ( model, Cmd.none )
@@ -164,8 +182,8 @@ recipeList model =
 
 recipeCard : Recipe -> Html Msg
 recipeCard recipe =
-    div [ class "recipe-card" ]
-        [ img [ class "recipe-img", src recipe.small_photo_src, onClick (Activate recipe) ] []
+    a [ href recipe.path, class "recipe-card" ]
+        [ img [ class "recipe-img", src recipe.small_photo_src ] []
         , div [ class "card-title" ] [ text recipe.title ]
         ]
 
@@ -173,22 +191,10 @@ recipeCard recipe =
 displayActiveRecipe : Recipe -> Html Msg
 displayActiveRecipe recipe =
     div [ class "active-recipe" ]
-        [ backButton
-        , h1 [ class "active-recipe-title" ] [ text recipe.title ]
+        [ h1 [ class "active-recipe-title" ] [ text recipe.title ]
         , img [ class "active-recipe-img", src recipe.photo_src ] []
         , Markdown.toHtml [ class "active-recipe-description" ] recipe.description
         ]
-
-
-backButton : Html Msg
-backButton =
-    let
-        closeIcon =
-            10006
-                |> Char.fromCode
-                |> String.fromChar
-    in
-    button [ class "back-button", onClick RenderRecipeList ] [ text closeIcon ]
 
 
 filterRecipesInput : Model -> Html Msg
@@ -250,18 +256,6 @@ initialModel key url =
     }
 
 
-
--- init : ( Model, Cmd Msg )
--- init =
---     ( initialModel, Cmd.none )
--- initialModel : Model
--- initialModel =
---     { recipes = List.take 6 recipes
---     , activeRecipe = Nothing
---     , recipeCount = 6
---     }
-
-
 main : Program () Model Msg
 main =
     Browser.application
@@ -272,13 +266,3 @@ main =
         , onUrlChange = UrlChanged
         , onUrlRequest = LinkClicked
         }
-
-
-
--- { init = \() -> init
--- , update = update
--- , subscriptions = always Sub.none
--- , view = view
--- , onUrlChange = ChangedUrl
--- , onUrlRequest = ClickedLink
--- }

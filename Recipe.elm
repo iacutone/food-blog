@@ -1,12 +1,21 @@
 module Recipe exposing (recipes)
 
 
-recipes : List { id : String, title : String, small_photo_src : String, photo_src : String, description : String }
+recipes :
+    List
+        { id : String
+        , title : String
+        , small_photo_src : String
+        , photo_src : String
+        , description : String
+        , path : String
+        }
 recipes =
     [ { id = "1"
       , title = "Kung Pao"
       , small_photo_src = "photos/3-23-2018.JPG"
       , photo_src = "photos/3-23-2018.JPG"
+      , path = "kung-pao"
       , description = """
 
 # Kung Pao with Shrimp and Chicken
