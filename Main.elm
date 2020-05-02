@@ -9,7 +9,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (on, onClick, onInput)
 import Json.Decode
 import Markdown exposing (toHtml)
-import Recipe exposing (..)
+import Recipe
 import String exposing (fromChar)
 import Url
 
@@ -31,26 +31,20 @@ type UrlRequest
     | External String
 
 
+type Recipe
+    = Recipe
+
+
 
 -- MODEL
 
 
 type alias Model =
-    { recipes : List Recipe
-    , activeRecipe : Maybe Recipe
+    { recipes : List Recipe.Recipe
+    , activeRecipe : Maybe Recipe.Recipe
     , recipeCount : Int
     , key : Nav.Key
     , url : Url.Url
-    }
-
-
-type alias Recipe =
-    { id : String
-    , title : String
-    , description : String
-    , small_photo_src : String
-    , photo_src : String
-    , path : String
     }
 
 
@@ -82,7 +76,7 @@ update msg model =
                         model.recipeCount + 3
 
                     lisfOfRecipes =
-                        Array.fromList recipes
+                        Array.fromList Recipe.recipes
                             |> Array.slice model.recipeCount num
                             |> Array.toList
 
@@ -104,7 +98,14 @@ update msg model =
                         _ ->
                             let
                                 recipe =
-                                    List.head (List.filter (\r -> r.path == "kung-pao") recipes)
+                                    List.head
+                                        (List.filter
+                                            (\r ->
+                                                r.path
+                                                    == "kung-pao"
+                                            )
+                                            Recipe.recipes
+                                        )
                             in
                             case recipe of
                                 Just r ->
@@ -124,7 +125,10 @@ update msg model =
                 _ ->
                     let
                         recipe =
-                            List.head (List.filter (\r -> r.path == "kung-pao") recipes)
+                            List.head
+                                (List.filter (\r -> r.path == "kung-pao")
+                                    Recipe.recipes
+                                )
                     in
                     case recipe of
                         Just r ->
@@ -174,21 +178,35 @@ recipeList : Model -> Html Msg
 recipeList model =
     case model.activeRecipe of
         Nothing ->
-            div [ class "recipes-container", onScroll ScrollEvent ] (List.map recipeCard model.recipes)
+            div [ class "recipes-container", onScroll ScrollEvent ]
+                (List.map
+                    recipeCard
+                    model.recipes
+                )
 
         Just recipe ->
             div [] []
 
 
-recipeCard : Recipe -> Html Msg
+recipeCard : Recipe.Recipe -> Html Msg
 recipeCard recipe =
     a [ href recipe.path, class "recipe-card" ]
         [ img [ class "recipe-img", src recipe.small_photo_src ] []
         , div [ class "card-title" ] [ text recipe.title ]
+        , case recipe.tags of
+            Nothing ->
+                div [] []
+
+            Just tags ->
+                div []
+                    (List.map
+                        displayTag
+                        tags
+                    )
         ]
 
 
-displayActiveRecipe : Recipe -> Html Msg
+displayActiveRecipe : Recipe.Recipe -> Html Msg
 displayActiveRecipe recipe =
     div [ class "active-recipe" ]
         [ h1 [ class "active-recipe-title" ] [ text recipe.title ]
@@ -197,25 +215,30 @@ displayActiveRecipe recipe =
         ]
 
 
+displayTag : String -> Html Msg
+displayTag tag =
+    small [ class "card-tags" ] [ text tag ]
+
+
 filterRecipesInput : Model -> Html Msg
 filterRecipesInput model =
     case model.activeRecipe of
         Nothing ->
             div [ class "search-field" ]
-                [ input [ class "search-field", placeholder "... search", onInput Filter ] []
+                [ input [ class "search-field", placeholder "Search for a recipe", onInput Filter ] []
                 ]
 
         Just recipe ->
             div [] []
 
 
-filterRecipes : Model -> String -> List Recipe
+filterRecipes : Model -> String -> List Recipe.Recipe
 filterRecipes model query =
     if query == "" then
-        recipes
+        Recipe.recipes
 
     else
-        List.filter (\recipe -> String.contains query recipe.title) recipes
+        List.filter (\recipe -> String.contains query recipe.title) Recipe.recipes
 
 
 onScroll msg =
@@ -248,7 +271,7 @@ init flags url key =
 
 
 initialModel key url =
-    { recipes = List.take 6 recipes
+    { recipes = List.take 6 Recipe.recipes
     , activeRecipe = Nothing
     , recipeCount = 6
     , key = key

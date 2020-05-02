@@ -5231,7 +5231,17 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Recipe$recipes = _List_fromArray(
 	[
-		{description: '\n\n# Kung Pao with Shrimp and Chicken\n\n## Ingredients\n\n### Aromatic\n- thumbnail size ginger, minced\n- 3 large cloves  garlic, minced\n- tablespoon sichuan pepper corns, ground\n\n### Meat\n- 3 chicken breasts cut into 1/2 inch cubes\n- 1/2 pound shrimp, optional\n\n### Vegetable\n- 2 green bell peppers, chopped\n- 1 pound white mushrooms, chopped\n- 2 sticks celery, chopped\n\n### Sauce\n- 1/4 cup black vinegar\n- 1/4 cup white cooking wine\n- 2 tablespoons corn starch\n- 1/8 cup soy sauce\n\n### Garnish\n- salted peanuts\n\n### Description\nAdd ginger and garlic and to wok and saute over medium heat. When garlic is golden brown, add wine and reduce. Push garlic/ginger mixture to the side and place chicken under oven burner with high heat until the outside it white. While the chicken cooks, add soy sauce and black vinegar. Make room in center of wok; add corn starch to liquid and mix until thick. Add the bell peppers and cook for two minutes, then add mushrooms/shrimp and cook for an additional minute. Turn off the burner and immediately add celery. Serve with peanuts and pepper corns.\n\n### Other Notes\n- between 5 - 7 servings\n', id: '1', path: 'kung-pao', photo_src: 'photos/3-23-2018.JPG', small_photo_src: 'photos/3-23-2018.JPG', title: 'Kung Pao'}
+		{
+		description: '\n\n# Kung Pao with Shrimp and Chicken\n\n## Ingredients\n\n### Aromatic\n- thumbnail size ginger, minced\n- 3 large cloves  garlic, minced\n- tablespoon sichuan pepper corns, ground\n\n### Meat\n- 3 chicken breasts cut into 1/2 inch cubes\n- 1/2 pound shrimp, optional\n\n### Vegetable\n- 2 green bell peppers, chopped\n- 1 pound white mushrooms, chopped\n- 2 sticks celery, chopped\n\n### Sauce\n- 1/4 cup black vinegar\n- 1/4 cup white cooking wine\n- 2 tablespoons corn starch\n- 1/8 cup soy sauce\n\n### Garnish\n- salted peanuts\n\n### Description\nAdd ginger and garlic and to wok and saute over medium heat. When garlic is golden brown, add wine and reduce. Push garlic/ginger mixture to the side and place chicken under oven burner with high heat until the outside it white. While the chicken cooks, add soy sauce and black vinegar. Make room in center of wok; add corn starch to liquid and mix until thick. Add the bell peppers and cook for two minutes, then add mushrooms/shrimp and cook for an additional minute. Turn off the burner and immediately add celery. Serve with peanuts and pepper corns.\n\n### Other Notes\n- between 5 - 7 servings\n',
+		id: '1',
+		path: 'kung-pao',
+		photo_src: 'photos/3-23-2018.JPG',
+		small_photo_src: 'photos/3-23-2018.JPG',
+		tags: $elm$core$Maybe$Just(
+			_List_fromArray(
+				['#dinner'])),
+		title: 'Kung Pao'
+	}
 	]);
 var $elm$core$List$takeReverse = F3(
 	function (n, list, kept) {
@@ -5977,7 +5987,7 @@ var $author$project$Main$filterRecipesInput = function (model) {
 					_List_fromArray(
 						[
 							$elm$html$Html$Attributes$class('search-field'),
-							$elm$html$Html$Attributes$placeholder('... search'),
+							$elm$html$Html$Attributes$placeholder('Search for a recipe'),
 							$elm$html$Html$Events$onInput($author$project$Main$Filter)
 						]),
 					_List_Nil)
@@ -6031,6 +6041,19 @@ var $author$project$Main$onScroll = function (msg) {
 		A2($elm$json$Json$Decode$map, msg, $author$project$Main$scrollInfoDecoder));
 };
 var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$html$Html$small = _VirtualDom_node('small');
+var $author$project$Main$displayTag = function (tag) {
+	return A2(
+		$elm$html$Html$small,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('card-tags')
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text(tag)
+			]));
+};
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
@@ -6064,7 +6087,19 @@ var $author$project$Main$recipeCard = function (recipe) {
 				_List_fromArray(
 					[
 						$elm$html$Html$text(recipe.title)
-					]))
+					])),
+				function () {
+				var _v0 = recipe.tags;
+				if (_v0.$ === 'Nothing') {
+					return A2($elm$html$Html$div, _List_Nil, _List_Nil);
+				} else {
+					var tags = _v0.a;
+					return A2(
+						$elm$html$Html$div,
+						_List_Nil,
+						A2($elm$core$List$map, $author$project$Main$displayTag, tags));
+				}
+			}()
 			]));
 };
 var $author$project$Main$recipeList = function (model) {

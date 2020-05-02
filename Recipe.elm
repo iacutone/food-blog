@@ -1,21 +1,25 @@
-module Recipe exposing (recipes)
+module Recipe exposing (Recipe, recipes)
 
 
-recipes :
-    List
-        { id : String
-        , title : String
-        , small_photo_src : String
-        , photo_src : String
-        , description : String
-        , path : String
-        }
+type alias Recipe =
+    { id : String
+    , title : String
+    , description : String
+    , small_photo_src : String
+    , photo_src : String
+    , path : String
+    , tags : Maybe (List String)
+    }
+
+
+recipes : List Recipe
 recipes =
     [ { id = "1"
       , title = "Kung Pao"
       , small_photo_src = "photos/3-23-2018.JPG"
       , photo_src = "photos/3-23-2018.JPG"
       , path = "kung-pao"
+      , tags = Just [ "#dinner" ]
       , description = """
 
 # Kung Pao with Shrimp and Chicken
