@@ -101,8 +101,7 @@ update msg model =
                                     List.head
                                         (List.filter
                                             (\r ->
-                                                r.path
-                                                    == "kung-pao"
+                                                r.path == url.path
                                             )
                                             Recipe.recipes
                                         )
@@ -118,24 +117,24 @@ update msg model =
                     ( model, Nav.load href )
 
         UrlChanged url ->
-            case url.path of
-                "/" ->
-                    ( { model | activeRecipe = Nothing }, Cmd.none )
-
-                _ ->
+            case url.fragment of
+                Just f ->
                     let
                         recipe =
                             List.head
-                                (List.filter (\r -> r.path == "kung-pao")
+                                (List.filter (\r -> r.path == "/#" ++ f)
                                     Recipe.recipes
                                 )
                     in
                     case recipe of
                         Just r ->
-                            ( { model | activeRecipe = Just r }, Cmd.none )
+                            ( { model | activeRecipe = Just r, url = url }, Cmd.none )
 
                         Nothing ->
                             ( { model | activeRecipe = Nothing }, Cmd.none )
+
+                Nothing ->
+                    ( { model | activeRecipe = Nothing }, Cmd.none )
 
         None ->
             ( model, Cmd.none )

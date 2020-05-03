@@ -5232,9 +5232,9 @@ var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Recipe$recipes = _List_fromArray(
 	[
 		{
-		description: '\n\n# Kung Pao with Shrimp and Chicken\n\n## Ingredients\n\n### Aromatic\n- thumbnail size ginger, minced\n- 3 large cloves  garlic, minced\n- tablespoon sichuan pepper corns, ground\n\n### Meat\n- 3 chicken breasts cut into 1/2 inch cubes\n- 1/2 pound shrimp, optional\n\n### Vegetable\n- 2 green bell peppers, chopped\n- 1 pound white mushrooms, chopped\n- 2 sticks celery, chopped\n\n### Sauce\n- 1/4 cup black vinegar\n- 1/4 cup white cooking wine\n- 2 tablespoons corn starch\n- 1/8 cup soy sauce\n\n### Garnish\n- salted peanuts\n\n### Description\nAdd ginger and garlic and to wok and saute over medium heat. When garlic is golden brown, add wine and reduce. Push garlic/ginger mixture to the side and place chicken under oven burner with high heat until the outside it white. While the chicken cooks, add soy sauce and black vinegar. Make room in center of wok; add corn starch to liquid and mix until thick. Add the bell peppers and cook for two minutes, then add mushrooms/shrimp and cook for an additional minute. Turn off the burner and immediately add celery. Serve with peanuts and pepper corns.\n\n### Other Notes\n- between 5 - 7 servings\n',
+		description: '\n# Kung Pao with Shrimp and Chicken\n\n## Ingredients\n\n### Aromatic\n- thumbnail size ginger, minced\n- 3 large cloves  garlic, minced\n- tablespoon sichuan pepper corns, ground\n\n### Meat\n- 3 chicken breasts cut into 1/2 inch cubes\n- 1/2 pound shrimp, optional\n\n### Vegetable\n- 2 green bell peppers, chopped\n- 1 pound white mushrooms, chopped\n- 2 sticks celery, chopped\n\n### Sauce\n- 1/4 cup black vinegar\n- 1/4 cup white cooking wine\n- 2 tablespoons corn starch\n- 1/8 cup soy sauce\n\n### Garnish\n- salted peanuts\n\n### Instructions\nAdd ginger and garlic and to wok and saute over medium heat. When garlic is golden brown, add wine and reduce. Push garlic/ginger mixture to the side and place chicken under oven burner with high heat until the outside it white. While the chicken cooks, add soy sauce and black vinegar. Make room in center of wok; add corn starch to liquid and mix until thick. Add the bell peppers and cook for two minutes, then add mushrooms/shrimp and cook for an additional minute. Turn off the burner and immediately add celery. Serve with peanuts and pepper corns.\n\n### Other Notes\n- between 5 - 7 servings\n',
 		id: '1',
-		path: 'kung-pao',
+		path: '/#kung-pao',
 		photo_src: 'photos/3-23-2018.JPG',
 		small_photo_src: 'photos/3-23-2018.JPG',
 		tags: $elm$core$Maybe$Just(
@@ -5790,7 +5790,7 @@ var $author$project$Main$update = F2(
 							A2(
 								$elm$core$List$filter,
 								function (r) {
-									return r.path === 'kung-pao';
+									return _Utils_eq(r.path, url.path);
 								},
 								$author$project$Recipe$recipes));
 						if (recipe.$ === 'Just') {
@@ -5824,19 +5824,14 @@ var $author$project$Main$update = F2(
 				}
 			case 'UrlChanged':
 				var url = msg.a;
-				var _v4 = url.path;
-				if (_v4 === '/') {
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{activeRecipe: $elm$core$Maybe$Nothing}),
-						$elm$core$Platform$Cmd$none);
-				} else {
+				var _v4 = url.fragment;
+				if (_v4.$ === 'Just') {
+					var f = _v4.a;
 					var recipe = $elm$core$List$head(
 						A2(
 							$elm$core$List$filter,
 							function (r) {
-								return r.path === 'kung-pao';
+								return _Utils_eq(r.path, '/#' + f);
 							},
 							$author$project$Recipe$recipes));
 					if (recipe.$ === 'Just') {
@@ -5845,7 +5840,8 @@ var $author$project$Main$update = F2(
 							_Utils_update(
 								model,
 								{
-									activeRecipe: $elm$core$Maybe$Just(r)
+									activeRecipe: $elm$core$Maybe$Just(r),
+									url: url
 								}),
 							$elm$core$Platform$Cmd$none);
 					} else {
@@ -5855,6 +5851,12 @@ var $author$project$Main$update = F2(
 								{activeRecipe: $elm$core$Maybe$Nothing}),
 							$elm$core$Platform$Cmd$none);
 					}
+				} else {
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{activeRecipe: $elm$core$Maybe$Nothing}),
+						$elm$core$Platform$Cmd$none);
 				}
 			default:
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);

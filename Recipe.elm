@@ -1,5 +1,9 @@
 module Recipe exposing (Recipe, recipes)
 
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Markdown exposing (toHtml)
+
 
 type alias Recipe =
     { id : String
@@ -18,10 +22,9 @@ recipes =
       , title = "Kung Pao"
       , small_photo_src = "photos/3-23-2018.JPG"
       , photo_src = "photos/3-23-2018.JPG"
-      , path = "kung-pao"
+      , path = "/#kung-pao"
       , tags = Just [ "#dinner" ]
       , description = """
-
 # Kung Pao with Shrimp and Chicken
 
 ## Ingredients
