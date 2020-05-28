@@ -20,7 +20,6 @@ import Url
 
 type Msg
     = Filter String
-    | ScrollEvent ScrollInfo
     | LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
     | None
@@ -68,25 +67,6 @@ update msg model =
                     filterRecipes model query
             in
             ( { model | recipes = filteredRecipes }, Cmd.none )
-
-        ScrollEvent { scrollHeight, scrollTop, offsetHeight } ->
-            if (scrollHeight - scrollTop) <= offsetHeight then
-                let
-                    num =
-                        model.recipeCount + 3
-
-                    lisfOfRecipes =
-                        Array.fromList Recipe.recipes
-                            |> Array.slice model.recipeCount num
-                            |> Array.toList
-
-                    appendedRecipes =
-                        appendRecipes lisfOfRecipes model
-                in
-                ( { model | recipes = appendedRecipes, recipeCount = num }, Cmd.none )
-
-            else
-                ( model, Cmd.none )
 
         LinkClicked urlRequest ->
             case urlRequest of
@@ -177,7 +157,7 @@ recipeList : Model -> Html Msg
 recipeList model =
     case model.activeRecipe of
         Nothing ->
-            div [ class "recipes-container", onScroll ScrollEvent ]
+            div [ class "recipes-container" ]
                 (List.map
                     recipeCard
                     model.recipes
