@@ -156,7 +156,7 @@ view : Model -> Browser.Document Msg
 view model =
     { title = "Recipes"
     , body =
-        [ h1 [ class "title" ] [ text "Recipes by EV" ]
+        [ h1 [ class "title" ] [ text "Recipes" ]
         , div []
             [ filterRecipesInput model
             , div []

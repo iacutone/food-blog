@@ -19,11 +19,14 @@ div {
 }
 
 .recipe-card {
+  position: relative;
   margin: 20px;
   padding: 20px;
+  text-align: center;
   display: inline-block;
   border: 1px solid #71717F;
-  height: 400px;
+  height: 450px;
+  width: 350px;
   text-decoration: none;
 }
 
@@ -40,13 +43,10 @@ div {
 
 .card-tags {
   font-size: 12px;
-  position: relative;
-  bottom: 0;
 }
 
 .recipe-img {
   border-radius: 50%;
-  object-fit: cover;
   height: 300px;
   width: 300px;
 }

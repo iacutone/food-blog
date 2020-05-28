@@ -5232,7 +5232,7 @@ var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Recipe$recipes = _List_fromArray(
 	[
 		{
-		description: '\n# Kung Pao with Shrimp and Chicken\n\n## Ingredients\n\n### Aromatic\n- thumbnail size ginger, minced\n- 3 large cloves  garlic, minced\n- tablespoon sichuan pepper corns, ground\n\n### Meat\n- 3 chicken breasts cut into 1/2 inch cubes\n- 1/2 pound shrimp, optional\n\n### Vegetable\n- 2 green bell peppers, chopped\n- 1 pound white mushrooms, chopped\n- 2 sticks celery, chopped\n\n### Sauce\n- 1/4 cup black vinegar\n- 1/4 cup white cooking wine\n- 2 tablespoons corn starch\n- 1/8 cup soy sauce\n\n### Garnish\n- salted peanuts\n\n### Instructions\nAdd ginger and garlic and to wok and saute over medium heat. When garlic is golden brown, add wine and reduce. Push garlic/ginger mixture to the side and place chicken under oven burner with high heat until the outside it white. While the chicken cooks, add soy sauce and black vinegar. Make room in center of wok; add corn starch to liquid and mix until thick. Add the bell peppers and cook for two minutes, then add mushrooms/shrimp and cook for an additional minute. Turn off the burner and immediately add celery. Serve with peanuts and pepper corns.\n\n### Other Notes\n- between 5 - 7 servings\n',
+		description: '\n# Kung Pao with Shrimp and Chicken\n\nCheckout [this](https://www.youtube.com/watch?v=0KkkPZIDvj8) video by Kenji Alt-Lopez.\n\n## Ingredients\n\n### Aromatic\n- thumbnail size ginger, minced\n- 3 large cloves  garlic, minced\n- tablespoon sichuan pepper corns, ground\n\n### Meat\n- 3 chicken breasts cut into 1/2 inch cubes\n- 1/2 pound shrimp, optional\n\n### Vegetable\n- 2 green bell peppers, chopped\n- 1 pound white mushrooms, chopped\n- 2 sticks celery, chopped\n\n### Sauce\n- 1/4 cup black vinegar\n- 1/4 cup white cooking wine\n- 2 tablespoons corn starch\n- 1/8 cup soy sauce\n\n### Garnish\n- salted peanuts\n\n### Instructions\nAdd ginger and garlic and to wok and saute over medium heat. When garlic is golden brown, add wine and reduce. Push garlic/ginger mixture to the side and place chicken under oven burner with high heat until the outside it white. While the chicken cooks, add soy sauce and black vinegar. Make room in center of wok; add corn starch to liquid and mix until thick. Add the bell peppers and cook for two minutes, then add mushrooms/shrimp and cook for an additional minute. Turn off the burner and immediately add celery. Serve with peanuts and pepper corns.\n\n### Other Notes\n- between 5 - 7 servings\n',
 		id: '1',
 		path: '/#kung-pao',
 		photo_src: 'photos/3-23-2018.JPG',
@@ -5241,6 +5241,28 @@ var $author$project$Recipe$recipes = _List_fromArray(
 			_List_fromArray(
 				['#dinner'])),
 		title: 'Kung Pao'
+	},
+		{
+		description: '\n# Tools\n- [An Instant Pot](https://www.amazon.com/Instant-Pot-Multi-Use-Programmable-Pressure/dp/B00FLYWNYQ/ref=sr_1_3?dchild=1&keywords=instant+pot&qid=1588445648&sr=8-3)\n- I like [this](https://www.amazon.com/gp/product/B078YP92Y6/ref=ppx_yo_dt_b_asin_title_o00_s02?ie=UTF8&psc=1) stackable egg steamer\n\n# Ingredients\n- eggs\n\n# Instructions\n- Time: 6 minutes\n- Pressure: low\n- Natural release for 5 minutes\n- Place eggs in cold water bath for 4 minutes\n',
+		id: '2',
+		path: '/#pressure-cooked-eggs',
+		photo_src: 'photos/eggs.jpg',
+		small_photo_src: 'photos/eggs.jpg',
+		tags: $elm$core$Maybe$Just(
+			_List_fromArray(
+				['#quick #breakfast'])),
+		title: 'Instant Pot: Eggs'
+	},
+		{
+		description: '\n# Tools\n- [One Gallon Ball Jar](https://www.target.com/p/ball-128oz-commemorative-glass-mason-jar-with-lid-super-wide-mouth/-/A-12794404)\n- [Beverage Containier](https://www.amazon.com/gp/product/B00D04I6K4/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1)\n- [Cold Brew Bags](https://www.amazon.com/gp/product/B077YFNF6Q/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1)\n\n# Instructions\n- coarsely grind 6 ounces of coffee\n- fill Ball jar with water\n- steep for 48 hours in a cool and dark location\n\n',
+		id: '3',
+		path: '/#cold-brew-coffee',
+		photo_src: 'photos/coffee.jpg',
+		small_photo_src: 'photos/coffee.jpg',
+		tags: $elm$core$Maybe$Just(
+			_List_fromArray(
+				['#quick #drink'])),
+		title: 'Cold Brew Coffee'
 	}
 	]);
 var $elm$core$List$takeReverse = F3(
@@ -6132,7 +6154,7 @@ var $author$project$Main$view = function (model) {
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Recipes by EV')
+						$elm$html$Html$text('Recipes')
 					])),
 				A2(
 				$elm$html$Html$div,
