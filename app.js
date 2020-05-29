@@ -5231,8 +5231,8 @@ var $author$project$Recipe$recipes = _List_fromArray(
 		description: '\n# Tools\n- [An Instant Pot](https://www.amazon.com/Instant-Pot-Multi-Use-Programmable-Pressure/dp/B00FLYWNYQ/ref=sr_1_3?dchild=1&keywords=instant+pot&qid=1588445648&sr=8-3)\n\n# Ingredients\n- whole milk\n- plain yogurt\n\n# Instructions\n- Click Yogurt button, then click Adjust button to \'Boil\' setting -- 1 hour\n- Let milk cool for around two hours to 100 degreed Farhenheit\n- Skim off milk skin\n- Whisk in 2 spoonfuls of plain yogurt\n- Click Adjust button to 8 or 24 hours\n  - 8 hours for drinkable yogurt (I have not tried the 24 hour setting)\n',
 		id: '4',
 		path: '/#pressure-cooked-yogurt',
-		photo_src: '',
-		small_photo_src: '',
+		photo_src: 'photos/yogurt.jpg',
+		small_photo_src: 'photos/yogurt.jpg',
 		tags: $elm$core$Maybe$Just(
 			_List_fromArray(
 				['#quick #breakfast'])),

@@ -101,4 +101,27 @@ Add ginger and garlic and to wok and saute over medium heat. When garlic is gold
 
 """
       }
+    , { id = "4"
+      , title = "Instant Pot: Yogurt"
+      , small_photo_src = "photos/yogurt.jpg"
+      , photo_src = "photos/yogurt.jpg"
+      , path = "/#pressure-cooked-yogurt"
+      , tags = Just [ "#quick #breakfast" ]
+      , description = """
+# Tools
+- [An Instant Pot](https://www.amazon.com/Instant-Pot-Multi-Use-Programmable-Pressure/dp/B00FLYWNYQ/ref=sr_1_3?dchild=1&keywords=instant+pot&qid=1588445648&sr=8-3)
+
+# Ingredients
+- whole milk
+- plain yogurt
+
+# Instructions
+- Click Yogurt button, then click Adjust button to 'Boil' setting -- 1 hour
+- Let milk cool for around two hours to 100 degreed Farhenheit
+- Skim off milk skin
+- Whisk in 2 spoonfuls of plain yogurt
+- Click Adjust button to 8 or 24 hours
+  - 8 hours for drinkable yogurt (I have not tried the 24 hour setting)
+"""
+      }
     ]
