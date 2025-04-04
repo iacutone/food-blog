@@ -4,5 +4,5 @@ A single page application to practice my photography skills and share my recipes
 
 
 ### Elm
-- this app uses elm-go to compile and build the app
-`npx elm-go Main.elm --open -- --output=app.js`
+- this app uses elm-go to compile and build the app: `npx elm-go Main.elm --open -- --output=app.js`
+- for a prod release run: `elm make Main.elm --optimize --output=app.js`
