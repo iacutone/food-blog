@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), Recipe, ScrollInfo, appendRecipes, displayActiveRecipe, filterRecipes, filterRecipesInput, init, main, onScroll, recipeCard, recipeList, scrollInfoDecoder, update, view)
+module Main exposing (Model, Msg(..), Recipe, appendRecipes, displayActiveRecipe, filterRecipes, filterRecipesInput, init, main, recipeCard, recipeList, update, view)
 
 import Array exposing (..)
 import Browser
@@ -44,13 +44,6 @@ type alias Model =
     , recipeCount : Int
     , key : Nav.Key
     , url : Url.Url
-    }
-
-
-type alias ScrollInfo =
-    { scrollHeight : Int
-    , scrollTop : Int
-    , offsetHeight : Int
     }
 
 
@@ -218,18 +211,6 @@ filterRecipes model query =
 
     else
         List.filter (\recipe -> String.contains query recipe.title) Recipe.recipes
-
-
-onScroll msg =
-    on "scroll" (Json.Decode.map msg scrollInfoDecoder)
-
-
-scrollInfoDecoder =
-    Json.Decode.map3 ScrollInfo
-        (Json.Decode.at [ "target", "scrollHeight" ] Json.Decode.int)
-        (Json.Decode.at [ "target", "scrollTop" ] Json.Decode.int)
-        (Json.Decode.at [ "target", "offsetHeight" ] Json.Decode.int)
-
 
 
 -- SUBSCRIPTIONS

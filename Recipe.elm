@@ -56,9 +56,6 @@ Checkout [this](https://www.youtube.com/watch?v=0KkkPZIDvj8) video by Kenji Alt-
 
 ### Instructions
 Add ginger and garlic and to wok and saute over medium heat. When garlic is golden brown, add wine and reduce. Push garlic/ginger mixture to the side and place chicken under oven burner with high heat until the outside it white. While the chicken cooks, add soy sauce and black vinegar. Make room in center of wok; add corn starch to liquid and mix until thick. Add the bell peppers and cook for two minutes, then add mushrooms/shrimp and cook for an additional minute. Turn off the burner and immediately add celery. Serve with peanuts and pepper corns.
-
-### Other Notes
-- between 5 - 7 servings
 """
       }
     , { id = "2"
