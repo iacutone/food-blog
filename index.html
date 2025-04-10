@@ -2,30 +2,23 @@
 <html>
   <head>
     <title>Recipes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A list of favorite recipes compiled by Eric Iacutone">
     <link rel="stylesheet" href="style.css">
     <link rel=icon href=favicon.ico>
-    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="app.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-38341110-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-38341110-3');
-    </script>
+    <script defer data-domain="recipces.iacut.one" src="https://plausible.iacutone.synology.me/js/script.js"></script>
   </head>
   <body>
     <div>
-      <h1 class="title">Recipes by EV</h1>
+      <h1 class="title">Recipes</h1>
     </div>
     <div id="container"></div>
     <script>
       var elm = document.getElementById('container');
 
-      app = Elm.Main.embed(elm);
+      Elm.Main.embed(elm);
     </script>
   </body>
 </html>

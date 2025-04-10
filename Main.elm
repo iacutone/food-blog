@@ -1,51 +1,51 @@
 module Main exposing (..)
 
+import Array exposing(..)
+import Char exposing (fromCode)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (on, onClick, onInput)
-import Char exposing (fromCode)
-import String exposing (fromChar)
 import Json.Decode
 import Markdown exposing (toHtml)
-import Array exposing(..)
 import Recipe exposing (..)
+import String exposing (fromChar)
 
 -- MSG
 
 type Msg
     = Activate Recipe
-    | RenderRecipeList
     | Filter String
-    | ScrollEvent ScrollInfo
     | None
+    | RenderRecipeList
+    | ScrollEvent ScrollInfo
 
 -- MODEL
 
 type alias Model =
-    { recipes: List Recipe
-    , activeRecipe: Maybe Recipe
+    { activeRecipe: Maybe Recipe
     , recipeCount: Int
+    , recipes: List Recipe
     }
 
 type alias Recipe =
     { id: String
-    , title: String
     , description: String
-    , small_photo_src: String
     , photo_src: String
+    , small_photo_src: String
+    , title: String
     }
 
 type alias ScrollInfo =
-    { scrollHeight : Int
+    { offsetHeight : Int
+    , scrollHeight : Int
     , scrollTop : Int
-    , offsetHeight : Int
     }
 
 initialModel : Model
 initialModel =
-    { recipes = List.take 6 recipes 
-    , activeRecipe = Nothing
+    { activeRecipe = Nothing
     , recipeCount = 6
+    , recipes = List.take 6 recipes 
     }
 
 -- UPDATE
@@ -144,7 +144,7 @@ filterRecipesInput model =
     case model.activeRecipe of
         Nothing ->
             div [ class "search-field" ] [
-                input [ class "search-field", placeholder "... search", onInput Filter ] []
+                input [ class "search-field", placeholder "Search for a recipe", onInput Filter ] []
                 ]
         Just recipe ->
             div [] []
