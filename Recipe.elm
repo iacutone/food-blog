@@ -1,29 +1,11 @@
-module Recipe exposing (Recipe, recipes)
+module Recipe exposing (..)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Markdown exposing (toHtml)
-
-
-type alias Recipe =
-    { id : String
-    , title : String
-    , description : String
-    , small_photo_src : String
-    , photo_src : String
-    , path : String
-    , tags : Maybe (List String)
-    }
-
-
-recipes : List Recipe
+recipes : List{id: String, title: String, small_photo_src: String, photo_src: String, description: String}
 recipes =
     [ { id = "1"
       , title = "Kung Pao"
       , small_photo_src = "photos/3-23-2018.JPG"
       , photo_src = "photos/3-23-2018.JPG"
-      , path = "/#kung-pao"
-      , tags = Just [ "#dinner" ]
       , description = """
 # Kung Pao with Shrimp and Chicken
 
@@ -62,8 +44,6 @@ Add ginger and garlic and to wok and saute over medium heat. When garlic is gold
       , title = "Instant Pot: Eggs"
       , small_photo_src = "photos/eggs.jpg"
       , photo_src = "photos/eggs.jpg"
-      , path = "/#pressure-cooked-eggs"
-      , tags = Just [ "#quick #breakfast" ]
       , description = """
 # Tools
 - [An Instant Pot](https://www.amazon.com/Instant-Pot-Multi-Use-Programmable-Pressure/dp/B00FLYWNYQ/ref=sr_1_3?dchild=1&keywords=instant+pot&qid=1588445648&sr=8-3)
@@ -83,8 +63,6 @@ Add ginger and garlic and to wok and saute over medium heat. When garlic is gold
       , title = "Cold Brew Coffee"
       , small_photo_src = "photos/coffee.jpg"
       , photo_src = "photos/coffee.jpg"
-      , path = "/#cold-brew-coffee"
-      , tags = Just [ "#quick #drink" ]
       , description = """
 # Tools
 - [One Gallon Ball Jar](https://www.target.com/p/ball-128oz-commemorative-glass-mason-jar-with-lid-super-wide-mouth/-/A-12794404)
@@ -102,8 +80,6 @@ Add ginger and garlic and to wok and saute over medium heat. When garlic is gold
       , title = "Instant Pot: Yogurt"
       , small_photo_src = "photos/yogurt.jpg"
       , photo_src = "photos/yogurt.jpg"
-      , path = "/#pressure-cooked-yogurt"
-      , tags = Just [ "#quick #breakfast" ]
       , description = """
 # Tools
 - [An Instant Pot](https://www.amazon.com/Instant-Pot-Multi-Use-Programmable-Pressure/dp/B00FLYWNYQ/ref=sr_1_3?dchild=1&keywords=instant+pot&qid=1588445648&sr=8-3)
