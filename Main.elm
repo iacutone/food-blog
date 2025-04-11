@@ -31,7 +31,6 @@ type alias Recipe =
     { id: String
     , description: String
     , photo_src: String
-    , small_photo_src: String
     , title: String
     }
 
@@ -116,7 +115,7 @@ recipeList model =
 recipeCard : Recipe -> Html Msg
 recipeCard recipe =
         div [ class "recipe-card" ]
-        [ img [ class "recipe-img", src recipe.small_photo_src, onClick (Activate recipe)] [] 
+        [ img [ class "recipe-img", src recipe.photo_src, onClick (Activate recipe)] [] 
         , div [ class "card-title"] [ text recipe.title ]
         ]
 

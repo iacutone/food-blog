@@ -1,11 +1,10 @@
 module Recipe exposing (..)
 
-recipes : List{id: String, title: String, small_photo_src: String, photo_src: String, description: String}
+recipes : List{id: String, title: String, photo_src: String, description: String}
 recipes =
     [ { id = "1"
       , title = "Kung Pao"
-      , small_photo_src = "photos/3-23-2018.JPG"
-      , photo_src = "photos/3-23-2018.JPG"
+      , photo_src = "photos/kung-pao.webp"
       , description = """
 # Kung Pao with Shrimp and Chicken
 
@@ -42,8 +41,7 @@ Add ginger and garlic and to wok and saute over medium heat. When garlic is gold
       }
     , { id = "2"
       , title = "Instant Pot: Eggs"
-      , small_photo_src = "photos/eggs.jpg"
-      , photo_src = "photos/eggs.jpg"
+      , photo_src = "photos/eggs.webp"
       , description = """
 # Tools
 - [An Instant Pot](https://www.amazon.com/Instant-Pot-Multi-Use-Programmable-Pressure/dp/B00FLYWNYQ/ref=sr_1_3?dchild=1&keywords=instant+pot&qid=1588445648&sr=8-3)
@@ -61,8 +59,7 @@ Add ginger and garlic and to wok and saute over medium heat. When garlic is gold
       }
     , { id = "3"
       , title = "Cold Brew Coffee"
-      , small_photo_src = "photos/coffee.jpg"
-      , photo_src = "photos/coffee.jpg"
+      , photo_src = "photos/coffee.webp"
       , description = """
 # Tools
 - [One Gallon Ball Jar](https://www.target.com/p/ball-128oz-commemorative-glass-mason-jar-with-lid-super-wide-mouth/-/A-12794404)
@@ -78,8 +75,7 @@ Add ginger and garlic and to wok and saute over medium heat. When garlic is gold
       }
     , { id = "4"
       , title = "Instant Pot: Yogurt"
-      , small_photo_src = "photos/yogurt.jpg"
-      , photo_src = "photos/yogurt.jpg"
+      , photo_src = "photos/yogurt.webp"
       , description = """
 # Tools
 - [An Instant Pot](https://www.amazon.com/Instant-Pot-Multi-Use-Programmable-Pressure/dp/B00FLYWNYQ/ref=sr_1_3?dchild=1&keywords=instant+pot&qid=1588445648&sr=8-3)
